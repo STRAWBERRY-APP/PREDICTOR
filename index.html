@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Strawberry Prediction</title>
+    <script>
+        function getPrediction() {
+            fetch("http://your-flask-server-ip:5000/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ temperature: 25, humidity: 65, soil_moisture: 40, sunlight_hours: 8 })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").innerHTML = 
+                    `Will Grow: ${data.will_grow ? "Yes 🌱" : "No ❌"}<br>
+                     Can Harvest: ${data.can_harvest ? "Yes 🍓" : "No ❌"}`;
+            });
+        }
+    </script>
+</head>
+<body>
+    <h2>Strawberry Growth Predictor</h2>
+    <button onclick="getPrediction()">Get Prediction</button>
+    <p id="result"></p>
+</body>
+</html>
