@@ -4,17 +4,27 @@
     <title>Strawberry Prediction</title>
     <script>
         function getPrediction() {
+            // Get user inputs (replace with real sensor values if needed)
+            let data = {
+                temperature: 25,
+                humidity: 65,
+                soil_moisture: 40,
+                sunlight_hours: 8
+            };
+
+            // Fetch prediction from Flask API
             fetch("http://your-flask-server-ip:5000/predict", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ temperature: 25, humidity: 65, soil_moisture: 40, sunlight_hours: 8 })
+                body: JSON.stringify(data)
             })
             .then(response => response.json())
             .then(data => {
                 document.getElementById("result").innerHTML = 
                     `Will Grow: ${data.will_grow ? "Yes 🌱" : "No ❌"}<br>
                      Can Harvest: ${data.can_harvest ? "Yes 🍓" : "No ❌"}`;
-            });
+            })
+            .catch(error => console.error("Error:", error));
         }
     </script>
 </head>
